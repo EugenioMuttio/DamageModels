@@ -94,14 +94,16 @@ end
 if viscpr == 1
     % Comment/delete lines below once you have implemented this case
     % *******************************************************
-%     menu({'Viscous model has not been implemented yet. '; ...
-%         'Modify files "damage_main.m","rmap_dano1" ' ; ...
-%         'to include this option'},  ...
-%         'STOP');
-%     error('OPTION NOT AVAILABLE')
+    %menu({'Viscous model has not been implemented yet. '; ...
+    %    'Modify files "damage_main.m","rmap_dano1" ' ; ...
+    %    'to include this option'},  ...
+    %    'STOP');
+    %error('OPTION NOT AVAILABLE')
+    
 else
     Eprop(7)=0;
     Eprop(8)=1;
+    
 end
 
 
@@ -174,6 +176,7 @@ for  iload = 1:length(istep)
         % ------
         m_sigma=[sigma_n1(1)  sigma_n1(3) 0;sigma_n1(3) sigma_n1(2) 0 ; 0 0  sigma_n1(4)];
         sigma_v{i} =  m_sigma ;
+        
 
         % VARIABLES TO PLOT (set label on cell array LABELPLOT)
         % ----------------

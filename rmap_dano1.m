@@ -70,9 +70,10 @@ if(rtrial > r_n)
     %*   Loading
 
     fload=1;
-    delta_r=rtrial-r_n;
     %r_n1= rtrial  ;
     r_n1= ((eta-delta_t*(1-alpha))/(eta+alpha*delta_t))*r_n+(delta_t/(eta+alpha*delta_t))*rtrial;
+    delta_r=r_n1-r_n;
+
     if hard_type == 0
         %  Linear
         q_n1= q_n+ H*delta_r;
