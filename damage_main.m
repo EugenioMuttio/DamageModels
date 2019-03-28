@@ -154,12 +154,12 @@ for  iload = 1:length(istep)
         TIMEVECTOR(i) = TIMEVECTOR(i-1)+ delta_t(iload) ;
         % Total strain at step "i"
         % ------------------------
-        eps_n = strain(i-1,:) ;
+        eps_n=strain(i-1,:);
         eps_n1 = strain(i,:) ;
         %**************************************************************************************
         %*      DAMAGE MODEL
         % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        [sigma_n1,hvar_n,aux_var] = rmap_dano1(eps_n,eps_n1,hvar_n,Eprop,ce,MDtype,n,delta_t(iload));
+        [sigma_n1,hvar_n,aux_var] = rmap_dano1(eps_n,eps_n1,hvar_n,Eprop,ce,MDtype,n,delta_t);
         % PLOTTING DAMAGE SURFACE
         if(aux_var(1)>0)
             hplotSURF(i) = dibujar_criterio_dano1(ce, nu, hvar_n(6), 'r:',MDtype,n );
