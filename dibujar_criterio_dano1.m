@@ -10,7 +10,7 @@ function hplot = dibujar_criterio_dano1(ce,nu,q,tipo_linea,MDtype,n)
 %*                                      Eprop(1)=  E------>modulo de Young          %*
 %*                                      Eprop(2)=  nu----->modulo de Poisson        %*
 %*                                      Eprop(3)=  H----->modulo de Softening/hard. %*
-%*                                      Eprop(4)=sigma_u----->tensi?n ?ltima        %*
+%*                                      Eprop(4)=sigma_u----->tensi�n �ltima        %*
 %*                     ntype                                 %*
 %*                                 ntype=1  plane stress                            %*
 %*                                 ntype=2  plane strain                            %*
@@ -52,8 +52,10 @@ if MDtype==1
     radio = zeros(1,Contador) ;
     s1    = zeros(1,Contador) ;
     s2    = zeros(1,Contador) ;
+               
     
     for i=1:Contador
+        
         radio(i)= q/sqrt([m1(i) m2(i) 0 nu*(m1(i)+m2(i))]*ce_inv*[m1(i) m2(i) 0 ...
             nu*(m1(i)+m2(i))]');
         
@@ -62,10 +64,18 @@ if MDtype==1
         
     end
     hplot =plot(s1,s2,tipo_linea);
-    
+
     
 elseif MDtype==2
-   tetha=[0:0.01:2*pi];
+    % Comment/delete lines below once you have implemented this case
+    % *******************************************************
+    %menu({'Damage surface "ONLY-TENSION" has not been implemented yet. '; ...
+    %    'Modify files "Modelos_de_dano1" and "dibujar_criterio_dano1"' ; ...
+    %    'to include this option'},  ...
+    %    'STOP');
+    %error('OPTION NOT AVAILABLE')
+    
+    tetha=[0:0.01:2*pi];
     %**************************************************************************************
     %* RADIUS
     D=size(tetha);                       %*  Range
@@ -101,58 +111,54 @@ elseif MDtype==2
     
     hplot =plot(s1,s2,tipo_linea);
     
+     
+  
+  
+    
 elseif MDtype==3
-s0 = q/sqrt([1 0 0 nu]*ce_inv*[1 0 0 nu]'); 
-
-      tetha=[0:0.01:2*pi];
-%     **************************************************************************************
-%     * RADIUS
-      D=size(tetha);                       %*  Range
-      m1=cos(tetha);                       %*
-      m2=sin(tetha);                       %*
-      Contador=D(1,2);                     %*
-%     
-      radio = zeros(1,Contador) ;
-      s1    = zeros(1,Contador) ;
-      s2    = zeros(1,Contador) ;
-%     
-     for i=1:Contador
-      %Computation of theta - characteristic of non-symmetric
-      
-      if n==1 
-         radio(i)= q/sqrt([m1(i) m2(i) 0 nu*(m1(i)+m2(i))]*ce_inv*[m1(i) m2(i) 0 ...
-         nu*(m1(i)+m2(i))]');
-         s1(i)=radio(i)*m1(i); %sigma-1
-         s2(i)=radio(i)*m2(i); %sigma-2
-      elseif tetha(i)>=0 && tetha(i)<= pi/2
-         radio(i)= q/sqrt([m1(i) m2(i) 0 nu*(m1(i)+m2(i))]*ce_inv*[m1(i) m2(i) 0 ...
-              nu*(m1(i)+m2(i))]');
-         s1(i)=radio(i)*m1(i); %sigma-1
-         s2(i)=radio(i)*m2(i); %sigma-2 
-      elseif tetha(i)> pi/2 && tetha(i)<= pi
-         s1(i)= (n*s0/pi)*(-2*tetha(i)+pi);
-         s2(i)= (2*s0/pi)*(-tetha(i)+pi);
-      elseif tetha(i)> pi && tetha(i)<= 1.5*pi
-         radio(i)= n*q/sqrt([m1(i) m2(i) 0 nu*(m1(i)+m2(i))]*ce_inv*[m1(i) m2(i) 0 ...
-              nu*(m1(i)+m2(i))]');
-         s1(i)=radio(i)*m1(i); %sigma-1
-         s2(i)=radio(i)*m2(i); %sigma-2 
-      elseif tetha(i)> 1.5*pi && tetha(i)<= 2*pi
-         s1(i)= (s0/pi)*(2*tetha(i)-3*pi);
-         s2(i)= (2*s0*n/pi)*(tetha(i)-2*pi);
-      end
-     end
-     hplot =plot(s1,s2,tipo_linea);
-    
-    
-%     % Comment/delete lines below once you have implemented this case
-%     % *******************************************************
+    % Comment/delete lines below once you have implemented this case
+    % *******************************************************
 %     menu({'Damage surface "NON-SYMMETRIC" has not been implemented yet. '; ...
 %         'Modify files "Modelos_de_dano1" and "dibujar_criterio_dano1"' ; ...
 %         'to include this option'},  ...
 %         'STOP');
 %     error('OPTION NOT AVAILABLE')
     
+    tetha=[0:0.01:2*pi];
+    %**************************************************************************************
+    %* RADIUS
+    D=size(tetha);                       %*  Range
+    m1=cos(tetha);                       %*
+    m2=sin(tetha);                       %*
+    Contador=D(1,2);                     %*
+    
+    
+    radio = zeros(1,Contador) ;
+    s1    = zeros(1,Contador) ;
+    s2    = zeros(1,Contador) ;
+    
+    for i=1:Contador
+        sum_stress=0;
+        vec_stress=[m1(i) m2(i) nu*(m1(i)+m2(i))];
+        sum_stress_abs=sum(abs(vec_stress));
+        for j=1:3
+            if vec_stress(j)<0
+                vec_stress(j)=0;
+            end
+            sum_stress=sum_stress+vec_stress(j);
+        end
+        
+        theta_stress=sum_stress/sum_stress_abs;
+        coeft=theta_stress+(1-theta_stress)/n;
+        
+        radio(i)= q/(coeft*(sqrt([m1(i) m2(i) 0 nu*(m1(i)+m2(i))]*ce_inv*[m1(i) m2(i) 0 ...
+            nu*(m1(i)+m2(i))]')));
+        
+        s1(i)=radio(i)*m1(i);
+        s2(i)=radio(i)*m2(i);  
+        
+    end
+    hplot =plot(s1,s2,tipo_linea);
 end
 %**************************************************************************************
 
