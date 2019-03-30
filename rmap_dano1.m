@@ -137,9 +137,7 @@ aux_var(1) = fload;
 aux_var(2) = q_n1/r_n1;
 aux_var(3) = (q_n1-H*r_n1)/r_n1^3;
 Ce_tan=(1-dano_n1)*ce;
-%Ce_tan=(1-dano_n1)*ce-aux_var(1)*aux_var(3)*((ce*eps_n1')*(ce*eps_n1')');
 Ce_alg=Ce_tan-aux_var(1)*((alpha*delta_t)/(eta+alpha*delta_t)*aux_var(3)*r_n1/(sqrt(sigma_n1'*(inv(ce))*sigma_n1)/(1-dano_n1))*((ce*eps_n1')*(ce*eps_n1')'));
-%Ce_alg=(1-dano_n1)*ce-aux_var(1)*((alpha*delta_t)/(eta+alpha*delta_t)*aux_var(3)*r_n1/(1/tau_eps_n1)*((ce*eps_n1')*(ce*eps_n1')'));
 aux_var(4)=Ce_tan(1,1); %Ce_tan
 aux_var(5)=Ce_alg(1,1); %Ce_alg
 %*************************************************************************************
