@@ -39,26 +39,26 @@ MDtype =1;
 n = 2 ;
 % SOFTENING/HARDENING TYPE
 % ------------------------
-HARDTYPE = 'LINEAR' ; %{LINEAR,EXPONENTIAL}
+HARDTYPE = 'EXPONENTIAL' ; %{LINEAR,EXPONENTIAL}
 % VISCOUS/INVISCID
 % ------------------------
 VISCOUS = 'YES' ;
 % Viscous coefficient ----
 % ------------------------
-eta = 0.5 ;
+eta = 0.1 ;
 % TimeTotal (initial = 0) ----
 % ------------------------
 TimeTotal = 10 ; ;
 % Integration coefficient ALPHA
 % ------------------------
-ALPHA_COEFF = 1 ;
+ALPHA_COEFF = 0.5 ;
 % Points ---------------------------
 % ----------------------------------
 nloadstates = 3 ;
 SIGMAP = zeros(nloadstates,2) ;
-SIGMAP(1,:) =[300 0];
-SIGMAP(2,:) =[700 0];
-SIGMAP(3,:) =[0 0];
+SIGMAP(1,:) =[150 0];
+SIGMAP(2,:) =[300 0];
+SIGMAP(3,:) =[450 0];
 % Number of time increments for each load state
 % --------------------------------------- 
 istep = 10*ones(1,nloadstates) ;
