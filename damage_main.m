@@ -94,14 +94,16 @@ end
 if viscpr == 1
     % Comment/delete lines below once you have implemented this case
     % *******************************************************
-%     menu({'Viscous model has not been implemented yet. '; ...
-%         'Modify files "damage_main.m","rmap_dano1" ' ; ...
-%         'to include this option'},  ...
-%         'STOP');
-%     error('OPTION NOT AVAILABLE')
+    %menu({'Viscous model has not been implemented yet. '; ...
+    %    'Modify files "damage_main.m","rmap_dano1" ' ; ...
+    %    'to include this option'},  ...
+    %    'STOP');
+    %error('OPTION NOT AVAILABLE')
+    
 else
     Eprop(7)=0;
     Eprop(8)=1;
+    
 end
 
 
@@ -154,12 +156,12 @@ for  iload = 1:length(istep)
         TIMEVECTOR(i) = TIMEVECTOR(i-1)+ delta_t(iload) ;
         % Total strain at step "i"
         % ------------------------
-        eps_n = strain(i-1,:) ;
+        eps_n=strain(i-1,:);
         eps_n1 = strain(i,:) ;
         %**************************************************************************************
         %*      DAMAGE MODEL
         % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        [sigma_n1,hvar_n,aux_var] = rmap_dano1(eps_n,eps_n1,hvar_n,Eprop,ce,MDtype,n,delta_t(iload));
+        [sigma_n1,hvar_n,aux_var] = rmap_dano1(eps_n,eps_n1,hvar_n,Eprop,ce,MDtype,n,delta_t);
         % PLOTTING DAMAGE SURFACE
         if(aux_var(1)>0)
             hplotSURF(i) = dibujar_criterio_dano1(ce, nu, hvar_n(6), 'r:',MDtype,n );
@@ -174,6 +176,7 @@ for  iload = 1:length(istep)
         % ------
         m_sigma=[sigma_n1(1)  sigma_n1(3) 0;sigma_n1(3) sigma_n1(2) 0 ; 0 0  sigma_n1(4)];
         sigma_v{i} =  m_sigma ;
+        
 
         % VARIABLES TO PLOT (set label on cell array LABELPLOT)
         % ----------------

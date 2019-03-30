@@ -22,7 +22,7 @@ YOUNG_M = 20000 ;
 POISSON = 0.3 ;
 % Hardening/softening modulus
 % ---------------------------
-HARDSOFT_MOD = -0.25 ;
+HARDSOFT_MOD = -0.1 ;
 % Yield stress
 % ------------
 YIELD_STRESS = 200 ;
@@ -39,10 +39,10 @@ MDtype =1;
 n = 2 ;
 % SOFTENING/HARDENING TYPE
 % ------------------------
-HARDTYPE = 'LINEAR' ; %{LINEAR,EXPONENTIAL} 
+HARDTYPE = 'LINEAR' ; %{LINEAR,EXPONENTIAL}
 % VISCOUS/INVISCID
 % ------------------------
-VISCOUS = 'NO' ;
+VISCOUS = 'YES' ;
 % Viscous coefficient ----
 % ------------------------
 eta = 0.5 ;
@@ -57,11 +57,11 @@ ALPHA_COEFF = 1 ;
 nloadstates = 3 ;
 SIGMAP = zeros(nloadstates,2) ;
 SIGMAP(1,:) =[300 0];
-SIGMAP(2,:) =[50 0];
+SIGMAP(2,:) =[700 0];
 SIGMAP(3,:) =[0 0];
 % Number of time increments for each load state
 % --------------------------------------- 
-istep = 20*ones(1,nloadstates) ;
+istep = 10*ones(1,nloadstates) ;
  
 % VARIABLES TO PLOT
 vpx = 'STRAIN_1' ; % AVAILABLE OPTIONS: 'STRAIN_1', 'STRAIN_2'
@@ -70,7 +70,7 @@ vpx = 'STRAIN_1' ; % AVAILABLE OPTIONS: 'STRAIN_1', 'STRAIN_2'
 vpy = 'STRESS_1'             % AVAILABLE OPTIONS: 'STRESS_1', 'STRESS_2'
 %                    '|STRESS_1|', '|STRESS_2|'
 % 'norm(STRESS)', 'TIME', 'DAMAGE VAR.','hardening variable (q)','damage variable (d)'
-%  'internal variable (r)' 'C_{11] tangent','C_{11} algorithmic'
+%  'internal variable (r)' 'C_{11} tangent','C_{11} algorithmic'
 
 %  3) LABELPLOT{ivar}              --> Cell array with the label string for
 %                                    variables of "varplot"

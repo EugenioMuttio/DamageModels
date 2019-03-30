@@ -40,8 +40,8 @@ alpha=Eprop(8);
 %*       initializing                                                %*
  r0 = sigma_u/sqrt(E);
  zero_q=1.d-6*r0;
- A=1;
- q_inf=r0+sign(H)*r0;
+ A=abs(H);
+ q_inf=r0+sign(H)*0.99*r0;
 % if(r_n<=0.d0)
 %     r_n=r0;
 %     q_n=r0;
@@ -70,9 +70,10 @@ if(rtrial > r_n)
     %*   Loading
 
     fload=1;
-    delta_r=rtrial-r_n;
     %r_n1= rtrial  ;
     r_n1= ((eta-delta_t*(1-alpha))/(eta+alpha*delta_t))*r_n+(delta_t/(eta+alpha*delta_t))*rtrial;
+    delta_r=r_n1-r_n;
+
     if hard_type == 0
         %  Linear
         q_n1= q_n+ H*delta_r;
@@ -135,8 +136,8 @@ hvar_n1(6)= q_n1 ;
 aux_var(1) = fload;
 aux_var(2) = q_n1/r_n1;
 aux_var(3) = (q_n1-H*r_n1)/r_n1^3;
-Ce_tan=(1-dano_n1)*ce;
-Ce_alg=Ce_tan-aux_var(1)*((alpha*delta_t)/(eta+alpha*delta_t)*aux_var(3)*((ce*eps_n1')*(ce*eps_n1')'));
+Ce_tan=(1-dano_n1)*ce-aux_var(1)*aux_var(3)*((ce*eps_n1')*(ce*eps_n1')');
+Ce_alg=Ce_tan-aux_var(1)*((alpha*delta_t)/(eta+alpha*delta_t)*aux_var(3)*r_n1/(sqrt(sigma_n1'*(inv(ce))*sigma_n1)/(1-dano_n1))*((ce*eps_n1')*(ce*eps_n1')'));
 aux_var(4)=Ce_tan(1,1); %Ce_tan
 aux_var(5)=Ce_alg(1,1); %Ce_alg
 %*************************************************************************************
