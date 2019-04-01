@@ -21,14 +21,11 @@ rtrial= sqrt(eps_n1*ce*eps_n1')                       ;
 elseif (MDtype==2)  %* Only tension 
 
     sigma_n1=ce*eps_n1';
-    for j=1:4
-        if sigma_n1(j)<0
-            sigma_n1(j)=0;
-        end
-    end
+    
+    sigma_n1m=(sigma_n1+abs(sigma_n1))*0.5;
     
     cei=inv(ce);
-    eps_n1m=(cei*sigma_n1)';
+    eps_n1m=(cei*sigma_n1m)';
     
     rtrial= sqrt(eps_n1m*ce*eps_n1m')                       ;
     

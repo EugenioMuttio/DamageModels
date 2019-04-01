@@ -22,7 +22,7 @@ YOUNG_M = 2.00E+11 ;
 POISSON = 0.26 ;
 % Hardening/softening modulus
 % ---------------------------
-HARDSOFT_MOD = -0.5 ;
+HARDSOFT_MOD = -1.5 ;
 % Yield stress
 % ------------
 YIELD_STRESS = 2.50E+08 ;
@@ -33,16 +33,16 @@ ntype= 2 ;
 % Model    PTC = {'SYMMETRIC','TENSION','NON-SYMMETRIC'} ;
 %                     = 1         = 2         = 3
 % ---------------------------------------------------
-MDtype =1;
+MDtype =2;
 % Ratio compression strength / tension strength
 % ---------------------------------------------
 n = 4 ;
 % SOFTENING/HARDENING TYPE
 % ------------------------
-HARDTYPE = 'LINEAR' ; %{LINEAR,EXPONENTIAL}
+HARDTYPE = 'EXPONENTIAL' ; %{LINEAR,EXPONENTIAL}
 % VISCOUS/INVISCID
 % ------------------------
-VISCOUS = 'YES' ;
+VISCOUS = 'NO' ;
 % Viscous coefficient ----
 % ------------------------
 eta = 1 ;
@@ -57,17 +57,17 @@ ALPHA_COEFF = 1 ;
 nloadstates = 3 ;
 SIGMAP = zeros(nloadstates,2) ;
 SIGMAP(1,:) =[3.75E+08 0];
-SIGMAP(2,:) =[-3.00E+08 0];
-SIGMAP(3,:) =[5.75E+08 0];
+SIGMAP(2,:) =[-3.00E+08 -6.75E+08];
+SIGMAP(3,:) =[5.75E+08 2.0E+08];
 % Number of time increments for each load state
 % --------------------------------------- 
 istep = 10*ones(1,nloadstates) ;
  
 % VARIABLES TO PLOT
-vpx = 'TIME' ; % AVAILABLE OPTIONS: 'STRAIN_1', 'STRAIN_2'
+vpx = 'STRAIN_1' ; % AVAILABLE OPTIONS: 'STRAIN_1', 'STRAIN_2'
 %                    '|STRAIN_1|', '|STRAIN_2|'
 % 'norm(STRAIN)', 'TIME'
-vpy = 'C_{11} tangent'             % AVAILABLE OPTIONS: 'STRESS_1', 'STRESS_2'
+vpy = 'STRESS_1'             % AVAILABLE OPTIONS: 'STRESS_1', 'STRESS_2'
 %                    '|STRESS_1|', '|STRESS_2|'
 % 'norm(STRESS)', 'TIME', 'DAMAGE VAR.','hardening variable (q)','damage variable (d)'
 %  'internal variable (r)' 'C_{11} tangent','C_{11} algorithmic'
